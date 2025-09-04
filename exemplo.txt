@@ -1,0 +1,2 @@
+Olá este é o primeiro arquivo criado em Python.
+Ele será usado para demonstrar funções de manipulação.
