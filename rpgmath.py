@@ -50,6 +50,8 @@ class JogoMatematica:
     def __init__(self, root):
         self.root = root
         self.root.title("RPG de Matemática")
+        self.root.geometry("800x600")  # 📐 Janela maior
+        self.FONTE = ("Arial", 14)     # 🔠 Fonte padrão
         self.personagem = None
         self.pergunta_atual = None
         self.tempo_restante = 60
@@ -59,16 +61,16 @@ class JogoMatematica:
 
     def frame_inicio(self):
         self.clear()
-        tk.Label(self.root, text="Nome do personagem:").pack()
-        self.nome_entry = tk.Entry(self.root)
-        self.nome_entry.pack()
+        tk.Label(self.root, text="Nome do personagem:", font=self.FONTE).pack(pady=5)
+        self.nome_entry = tk.Entry(self.root, font=self.FONTE)
+        self.nome_entry.pack(pady=5)
 
-        tk.Label(self.root, text="Escolha sua classe:").pack()
+        tk.Label(self.root, text="Escolha sua classe:", font=self.FONTE).pack(pady=5)
         self.classe_var = tk.StringVar(value="Guerreiro")
         for classe in ["Guerreiro", "Mago", "Arqueiro"]:
-            tk.Radiobutton(self.root, text=classe, variable=self.classe_var, value=classe).pack()
+            tk.Radiobutton(self.root, text=classe, variable=self.classe_var, value=classe, font=self.FONTE).pack()
 
-        tk.Button(self.root, text="Iniciar Jogo", command=self.iniciar_jogo).pack()
+        tk.Button(self.root, text="Iniciar Jogo", font=self.FONTE, command=self.iniciar_jogo).pack(pady=10)
 
     def iniciar_jogo(self):
         nome = self.nome_entry.get()
@@ -78,19 +80,18 @@ class JogoMatematica:
 
     def frame_jogo(self):
         self.clear()
-        self.status_label = tk.Label(self.root, text=self.status_text())
-        self.status_label.pack()
+        self.status_label = tk.Label(self.root, text=self.status_text(), font=self.FONTE)
+        self.status_label.pack(pady=5)
 
         self.pergunta_atual = random.choice(perguntas)
-        tk.Label(self.root, text=self.pergunta_atual[0]).pack()
-        self.resposta_entry = tk.Entry(self.root)
-        self.resposta_entry.pack()
-        tk.Button(self.root, text="Responder", command=self.verificar_resposta).pack()
+        tk.Label(self.root, text=self.pergunta_atual[0], font=self.FONTE).pack(pady=10)
+        self.resposta_entry = tk.Entry(self.root, font=self.FONTE)
+        self.resposta_entry.pack(pady=5)
+        tk.Button(self.root, text="Responder", font=self.FONTE, command=self.verificar_resposta).pack(pady=10)
 
-        # ⏱️ Timer
         self.tempo_restante = 60
-        self.timer_label = tk.Label(self.root, text=f"⏳ Tempo restante: {self.tempo_restante}s")
-        self.timer_label.pack()
+        self.timer_label = tk.Label(self.root, text=f"⏳ Tempo restante: {self.tempo_restante}s", font=self.FONTE)
+        self.timer_label.pack(pady=5)
         self.atualizar_timer()
 
     def atualizar_timer(self):
@@ -123,12 +124,12 @@ class JogoMatematica:
 
     def frame_resultado(self, resultado):
         self.clear()
-        tk.Label(self.root, text=resultado).pack()
-        tk.Label(self.root, text=self.status_text()).pack()
+        tk.Label(self.root, text=resultado, font=self.FONTE).pack(pady=10)
+        tk.Label(self.root, text=self.status_text(), font=self.FONTE).pack(pady=5)
         if self.personagem.vida <= 0:
-            tk.Label(self.root, text="💀 Game Over!").pack()
+            tk.Label(self.root, text="💀 Game Over!", font=self.FONTE).pack(pady=10)
         else:
-            tk.Button(self.root, text="Próxima Pergunta", command=self.frame_jogo).pack()
+            tk.Button(self.root, text="Próxima Pergunta", font=self.FONTE, command=self.frame_jogo).pack(pady=10)
 
     def status_text(self):
         p = self.personagem
@@ -142,5 +143,3 @@ class JogoMatematica:
 root = tk.Tk()
 app = JogoMatematica(root)
 root.mainloop()
-
-
